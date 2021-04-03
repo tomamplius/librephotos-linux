@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+##### TODO ######
+#Apache proxy or Caddy proxy or nginx
+#auto configure postgres on local install
+#ask parameter like db parameter login admin passord etc..
+#Add parameter like --local-postgresql --posgresql-ip --dedicated-install
+#Update readme to non interactive installation
 
 function LOG_MANAGEMENT() {
 	#TODO: Create verbose mode
