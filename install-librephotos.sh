@@ -58,18 +58,18 @@ function installBackend(){
 		pip3 install -r requirements.txt
 		python3 -m spacy download en_core_web_sm
 EOF
-
-	echo ---register services in systemd
-	systemctl enable librephotos-backend
-	systemctl enable librephotos-worker.service
-	systemctl enable librephotos-image-similarity.service
-
+	echo ---deploy scripts
 	[ -d /usr/lib/librephotos/bin ] || mkdir -p /usr/lib/librephotos/bin
 	cp ressources/backend/bin/* /usr/lib/librephotos/bin/
 	ln -fs /usr/lib/librephotos/bin/librephotos-cli /usr/sbin/librephotos-cli
 	chown -R librephotos:librephotos  /usr/lib/librephotos/bin/
 	cp -r ressources/backend/etc/librephotos/ /etc/
 	cp ressources/backend/systemd/* /etc/systemd/system/
+	
+	echo ---register services in systemd
+	systemctl enable librephotos-backend
+	systemctl enable librephotos-worker.service
+	systemctl enable librephotos-image-similarity.service
 }
 
 # LIBREPHOTOS : FRONTEND
@@ -87,20 +87,19 @@ function installFrontend(){
 		npm run build
 		npm install serve
 EOF
-
-	echo ---register services in systemd
-	systemctl enable librephotos-frontend
-
+	echo ---deploy scripts
 	[ -d /usr/lib/librephotos/bin ] || mkdir -p /usr/lib/librephotos/bin
 	cp ressources/frontend/bin/* /usr/lib/librephotos/bin/
 	chown -R librephotos:librephotos  /usr/lib/librephotos/bin/
 	cp ressources/frontend/systemd/* /etc/systemd/system/
+	echo ---register services in systemd
+	systemctl enable librephotos-frontend
 }
 
 # LIBREPHOTOS : PROXY
 function installNginx(){
     apt install -y nginx
-    cp ressources/nginx/nginx/nginx.conf /etc/nginx/nginx.conf
+    cp ressources/nginx/nginx.conf /etc/nginx/nginx.conf
     systemctl restart nginx
 }
 
