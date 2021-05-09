@@ -10,14 +10,6 @@
   - postgresql
   - redis
 
-### for local postgresql and redis
-
-Install postgresql and redis
-
-~~~
-apt install postgresql redis
-~~~
-
 ### Postgresql creation database script
 
 Open sql console
@@ -93,6 +85,7 @@ As root you can use
 ~~~
 librephotos-cli build_similarity_index
 librephotos-cli clear_cache
+librephotos-cli scan
 ~~~
 
 ### Samba mount point sample
@@ -116,3 +109,24 @@ username=thomas
 password=mypassword
 domain=my.domain.com
 ~~~
+
+### Webdav mount point sample
+
+Install davfs2 :
+
+~~~
+apt install davfs2
+~~~
+
+On /etc/fstab add the following line :
+
+~~~
+https://monnextcloud.mondomaine.fr/remote.php/dav/files/myuser  /var/lib/librephotos/data/photos davfs uid=librephotos,gid=librephotos,file_mode=0777,dir_mode=0777,_netdev 0 0
+~~~
+
+Edit file /etc/davfs2/secrets to add new line with credential
+
+~~~
+https://monnextcloud.mondomaine.fr/remote.php/dav/files/myuser myuser password
+~~~
+
